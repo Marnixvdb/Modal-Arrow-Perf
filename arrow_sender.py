@@ -59,6 +59,17 @@ def send_id():
     return {"file_id": str(id)}
 
 
+@stub.function
+def as_function_result():
+    import pyarrow.parquet
+
+    # read table from mount
+    table = pyarrow.parquet.read_table(
+        '/root/data/yellow_tripdata_2020-06.parquet')
+
+    return table
+
+
 @stub.asgi(image=image, shared_volumes={CACHE_DIR: volume}, mounts=[
     modal.Mount(remote_dir="/root/data", local_dir="./data")
 ])

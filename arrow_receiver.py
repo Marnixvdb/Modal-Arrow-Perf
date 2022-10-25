@@ -7,7 +7,7 @@ from datetime import datetime
 image = modal.Image.debian_slim().pip_install(['pyarrow', 'requests'])
 
 # replace with generated for the arrow_sender app
-sender_url = '<enter fast api web url>'
+sender_url = 'https://bundlesandbatches-arrow-sender-fastapi-app.modal.run'
 
 stub = modal.Stub(
     image=image,
@@ -52,5 +52,17 @@ def get_data_from_shared_volume():
     result = f"Table with {table.num_columns} columns, {table.num_rows} rows, totaling {table.nbytes} bytes was processed in {processing_time}"
 
     os.remove(input_path)
+
+    return result
+
+
+@stub.function
+def get_data_as_function_result():
+    start = datetime.now()
+    as_function_result = modal.lookup('arrow_sender', 'as_function_result')
+    table = as_function_result()
+    processing_time = datetime.now() - start
+
+    result = f"Table with {table.num_columns} columns, {table.num_rows} rows, totaling {table.nbytes} bytes was processed in {processing_time}"
 
     return result

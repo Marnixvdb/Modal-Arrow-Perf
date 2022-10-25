@@ -1,6 +1,6 @@
 # Test performance of Arrow IPC
 
-Small repo to test performance of using Apache Arrow as exchange format for larger datasets. Two methods are compared: sending an Arrow table over HTTPs as a binary stream, and flushing the table to disk on a shared volume. 
+Small repo to test performance of using Apache Arrow as exchange format for larger datasets. Three methods are compared: sending an Arrow table over HTTPs as a binary stream, flushing the table to disk on a shared volume or passing it as a function result. 
 
 To get it working, make sure you have Modal installed.
 
@@ -22,7 +22,7 @@ Enter the base url generated for arrow_sender's fastapi client in arrow_receiver
 sender_url = '<enter fast api web url>'
 ```
 
-finally, test the peformance of both methods:
+finally, test the peformance of the three methods:
 
 ```
 python test_performance.py
