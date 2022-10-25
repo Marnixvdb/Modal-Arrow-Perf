@@ -36,10 +36,8 @@ def send_data():
     with pyarrow.ipc.new_stream(sink, table.schema) as writer:
         writer.write_table(table)
 
-    # create BytesIO object
     buf = sink.getvalue()
 
-    # return binary stream
     return Response(bytes(buf))
 
 
